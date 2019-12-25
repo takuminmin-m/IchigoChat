@@ -1,0 +1,4 @@
+# IchigoChat
+IchigoJamで動くチャットアプリIchigoChat
+このチャットは、RubyとSinatraにより作られています。
+動かすには、IchigoJamとMixJuiceが必要です。
