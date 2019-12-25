@@ -1,0 +1,114 @@
+﻿<!doctype html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8">
+		<title>chat system</title>
+		<meta name="descrption" content="概要">
+		<link rel="stylesheet" href="style.css">
+		<script type="text/javascript">
+			function jump() {
+				location.href = location.replace("about", "")
+			}
+		</script>
+	</head>
+
+	<body>
+		<h3>ブラウザでご覧の方へ</h3>
+		<p>
+		<h4>
+			当チャットアプリは、ichigojamでの対応のため、使用可能な文字は次に限られます：<br />
+			<ul>
+			<li>半角英数字</li>
+			<li>次の記号:!?"#$%&()=+-*/=^~\|@;:^&lt;&gt;,.{}[]「」・、。</li>
+			<li>半角スペース、改行</li>
+			<li>カタカナ（平仮名は使用不可</li>
+			</ul>
+			なお、非対応の文字は削除されますのでご了承ください。<br />
+			<input type="button" value="トップへ" onclick="jump()">
+		</h4>
+		</p>
+	</body>
+
+<!--
+文字列にリンクを対応させたいとき(="link" にすれば同じタブで、="blank" にすれば別タブで開くように出来る)・・・
+	<a href="相対パスまたは絶対パス（URL）"　target="link または blank">文字列</a>
+
+画像を表示させたいとき・・・
+	<img src="相対パスまたは絶対パス（URL)" alt="代わりの文字列”＞
+
+画像にリンクを対応させたいとき・・・
+	<a href="URL”><img src="URL" alt="代わりの文字列"></a>
+
+・コンテンツ1
+・コンテンツ2
+・コンテンツ3
+・コンテンツ4
+のようにしたいとき(ul を olにすれば番号付リストに出来る)・・・
+	<ul>
+		<li>コンテンツ1</li>
+		<li>コンテンツ2</li>
+		<li>コンテンツ3</li>
+		<li>コンテンツ4</li>
+	</ul>
+
+表を作りたいとき・・・
+	<table border="1">
+		<tr>
+			<th>見出し1</th> <th>見出し2</th> <th>見出し3</th>
+		</tr>
+
+		<tr>
+			<td>セル1-1</td> <td>セル1-2</td> <td>セル1-3</td>
+		</tr>
+
+		<tr>
+			<td>セル2-1</td> <td>セル2-2</td> <td>セル2-3</td>
+		</tr>
+
+		<tr>
+			<td>セル3-1</td> <td>セル3-2</td> <td>セル3-3</td>
+		</tr>
+	</table>
+
+セルを横方向につなげたいとき
+	<table border="1">
+		<tr>
+			<th colspan="2">見出し1+2</th>
+		</tr>
+
+		<tr>
+			<td>セル1-1</td> <td>セル1-2</td>
+		</tr>
+
+		<tr>
+			<td>セル2-1</td> <td>セル2-2</td>
+		</tr>
+
+		<tr>
+			<td>セル3-1</td> <td>セル3-2</td>
+		</tr>
+	</table>
+
+セルを横方向につなげたいとき
+	<table border="1">
+		<tr>
+			<th>見出し1</th> <th>見出し2</th> <th>見出し3</th>
+		</tr>
+
+		<tr>
+			<td rowspan="2">セル1-1+2-1</td> <td>セル1-2</td> <td>セル1-3</td>
+		</tr>
+
+		<tr>
+			<td>セル2-2</td> <td>セル2-3</td>
+		</tr>
+
+		<tr>
+			<td>セル3-1</td> <td>セル3-2</td> <td>セル3-3</td>
+		</tr>
+	</table>
+
+
+-->
+
+</html>

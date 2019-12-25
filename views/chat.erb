@@ -1,0 +1,29 @@
+﻿
+<!-- チャットアプリ　投稿システム -->
+
+<!doctype html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8">
+		<title>chat system</title>
+		<meta name="descrption" content="概要">
+		<link rel="stylesheet" href="style.css">
+		<script src="jquery.min.js"></script>
+		<script type="text/javascript" src="send.js"></script>
+	</head>
+
+	<body>
+		<div id="kusa0"><!--初期タグ-->
+		</div>
+		<form name="js">
+			&lt;トウコウ&gt;<br />
+			ナマエ:<input name="oso" type="text" id="nam"><br />
+			トウコウ(カタカナ,ハンカクエイスウノミ):<br />
+			<textarea name="osa" id="toukou" cols="30" rows="7"></textarea>
+			</br><input type="button" value="トウコウ" onclick="tyosei_()"><input type="button" value="ブラウザノカタヘ(jamハオスナ" onclick="jump()">
+		</form>
+		<br />
+
+	</body>
+
+</html>
