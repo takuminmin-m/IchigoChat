@@ -1,7 +1,6 @@
-require 'sinatra'
-require 'sinatra/reloader'
-require "sinatra/namespace"
-require 'json'
+require"rubygems"
+require"bundler"
+
 
 $boads = [
   {
@@ -44,12 +43,12 @@ namespace "/ij" do
     @str_sub = ($boads.size - 1).to_s
     return "'re or se\n?\"MJ GET 10.0.1.22:4567/ij/" + @str_sub + "/"
   end
-  
+
   get "/*/se" do |boad_num|
     sleep 0.1
     return "OK2\nCLS\n?\"MJ POST START 10.0.1.22:4567/ij/" + boad_num + "/se" + 21.chr + 32.chr + 37.chr + "?\"user=" + 21.chr + 32.chr + 39.chr + "?\"&chat=" + 21.chr + 32.chr + 55.chr + "?\"MJ POST END" + 21.chr + 32.chr + 32.chr
   end
-  
+
   get "/*/re" do |boad_num|
     @re_hash = recome(boad_num, "0")
     @re_str = "'user name: " + @re_hash["user"] + "\n'" + @re_hash["come"] + "\n" + "press enter to next\n" + "?\"MJ GET 10.0.1.22:4567/ij/" + boad_num.to_s + "/re/" + 1.to_s
@@ -67,18 +66,18 @@ namespace "/ij" do
     @come = params[:come]
     @user = params[:user]
     if (params[:pass] = nil)
-    
+
       if (params[:pass].to_s.chomp! == $boads[boad_num.to_i]["pass"].to_s) && (@user.to_s == $boads[boad_num.to_i]["user"][0].to_s)
         $boads[boad_num.to_i]["user"] << @user.chomp + "@nushi"
       else
         $boads[boad_num.to_i]["user"] << @user.chomp
       end
-      
+
     else
       $boads[boad_num.to_i]["user"] << @user.chomp
     end
-    
-    
+
+
     return "'I catch your come!\n'press enter to next\n" + "?\"MJ GET 10.0.1.22:4567/ij/" + boad_num.to_s + "/re"
   end
 
@@ -108,4 +107,3 @@ post "/*/ij/re/*" do |boad_num, come_num| #$B$"$/$^$G%F%9%HMQ(B $BI,$:>C$9$3$
   @chat = params[:chat]
   return "tence " + @chat
 end
-
