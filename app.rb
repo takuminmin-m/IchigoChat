@@ -1,5 +1,8 @@
 require"rubygems"
-require"bundler"
+require"bundler/setup"
+require"sinatra"
+require"sinatra/reloader"
+require"sinatra/namespace"
 
 
 $boads = [
