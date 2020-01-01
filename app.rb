@@ -22,6 +22,12 @@ def recome(boad_num, come_num)
   return {"come" => @come_sub, "user" => @user_sub}
 end
 
+def recome_ij(boad_num, come_num)
+  @re_hash = recome(boad_num, come_num)
+  @re_str = "'user name: " + @re_hash["user"] + "\n'" + @re_hash["come"] + "\n" + "press enter to next\n" + "?\"MJ GET 10.0.1.22:4567/ij/" + boad_num.to_s + "/re/" + 1.to_s
+  p $boads
+  return @re_str
+end
 
 
 get "/" do
@@ -35,6 +41,11 @@ end
 
 namespace "/ij" do
 
+  get "/reset" do
+    sleep 1
+    return "UART2\nOK\n'good bue!\n"
+  end
+
   post "/newboad" do
     content_type :json
     $boads.push({
@@ -44,43 +55,45 @@ namespace "/ij" do
     "pass" => params[:pass].chomp!
     })
     @str_sub = ($boads.size - 1).to_s
+    p $boads
+    sleep 1
     return "'re or se\n?\"MJ GET 10.0.1.22:4567/ij/" + @str_sub + "/"
   end
 
   get "/*/se" do |boad_num|
-    sleep 0.1
-    return "OK2\nCLS\n?\"MJ POST START 10.0.1.22:4567/ij/" + boad_num + "/se" + 21.chr + 32.chr + 37.chr + "?\"user=" + 21.chr + 32.chr + 39.chr + "?\"&chat=" + 21.chr + 32.chr + 55.chr + "?\"MJ POST END" + 21.chr + 32.chr + 32.chr
+    p $boads
+    sleep 1
+    return "OK2\nUART0\nCLS\nUART2:?\"MJ POST START 10.0.1.22:4567/ij/" + boad_num + "/se" + 21.chr + 32.chr + 37.chr + "?\"user=" + 21.chr + 32.chr + 39.chr + "?\"&come=" + 21.chr + 32.chr + 55.chr + "?\"MJ POST END" + 21.chr + 32.chr + 32.chr
   end
 
   get "/*/re" do |boad_num|
-    @re_hash = recome(boad_num, "0")
-    @re_str = "'user name: " + @re_hash["user"] + "\n'" + @re_hash["come"] + "\n" + "press enter to next\n" + "?\"MJ GET 10.0.1.22:4567/ij/" + boad_num.to_s + "/re/" + 1.to_s
-    return @re_str
+    sleep 1
+    return recome_ij(boad_num, 0)
   end
 
   get "/*/re/*" do |boad_num, come_num|
-    @re_hash = recome(boad_num, come_num)
-    @re_str = "'user name: " + @re_hash["user"] + "\n'" + @re_hash["come"] + "\n" + "'press enter to next\n?\"MJ GET 10.0.1.22:4567/ij/" + boad_num.to_s + "/re/" + (come_num + 1).to_s
-    return @re_str
+    sleep 1
+    return recome_ij(boad_num, come_num)
   end
 
   post "/*/se" do |boad_num|
     p $boads
     @come = params[:come]
     @user = params[:user]
-    if (params[:pass] = nil)
-
-      if (params[:pass].to_s.chomp! == $boads[boad_num.to_i]["pass"].to_s) && (@user.to_s == $boads[boad_num.to_i]["user"][0].to_s)
-        $boads[boad_num.to_i]["user"] << @user.chomp + "@nushi"
-      else
-        $boads[boad_num.to_i]["user"] << @user.chomp
-      end
-
-    else
+# スレ主かを判定して、"@ﾇｼ"を追加する
+#    if (params[:pass] = nil)
+#
+#     if (params[:pass].to_s.chomp! == $boads[boad_num.to_i]["pass"].to_s) && (@user.to_s == $boads[boad_num.to_i]["user"][0].to_s)
+#        $boads[boad_num.to_i]["user"] << @user.chomp + "@nushi"
+#      else
+#        $boads[boad_num.to_i]["user"] << @user.chomp
+#      end
+#
+#    else
       $boads[boad_num.to_i]["user"] << @user.chomp
-    end
+#    end
 
-
+    $boads[boad_num.to_i]["come"] << @come
     return "'I catch your come!\n'press enter to next\n" + "?\"MJ GET 10.0.1.22:4567/ij/" + boad_num.to_s + "/re"
   end
 
@@ -106,7 +119,7 @@ get "/*/renum" do |boad_num|
   return $boads[@boad_num]["come"].size.to_s
 end
 
-post "/*/ij/re/*" do |boad_num, come_num| #$B$"$/$^$G%F%9%HMQ(B $BI,$:>C$9$3$H!*(B
+post "/*/ij/re/*" do |boad_num, come_num| #あくまでテスト用 必ず消すこと！
   @chat = params[:chat]
   return "tence " + @chat
 end
