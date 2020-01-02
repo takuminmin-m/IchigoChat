@@ -24,7 +24,12 @@ end
 
 def recome_ij(boad_num, come_num)
   @re_hash = recome(boad_num, come_num)
-  @re_str = "'user name: " + @re_hash["user"] + "\n'" + @re_hash["come"] + "\n" + "press enter to next\n" + "?\"MJ GET 10.0.1.22:4567/ij/" + boad_num.to_s + "/re/" + 1.to_s
+  @re_str = "'user name: " + @re_hash["user"] + "\n'" + @re_hash["come"] + "\n" 
+  if $boads.size == come_num.to_i + 1
+    @re_str = @re_str + "'taht is all come\n'boad_number/re, boad_number/se, sarch or newboad\n?\"MJ GET 10.0.1.22:4567/ij/" 
+  else
+    @re_str = @re_str + "'press enter to next\n" + "?\"MJ GET 10.0.1.22:4567/ij/" + boad_num.to_s + "/re/" + 1.to_s
+  end
   p $boads
   return @re_str
 end
@@ -61,9 +66,9 @@ namespace "/ij" do
   end
 
   get "/*/se" do |boad_num|
-    p $boads
     sleep 1
     return "OK2\nUART0\nCLS\nUART2:?\"MJ POST START 10.0.1.22:4567/ij/" + boad_num + "/se" + 21.chr + 32.chr + 37.chr + "?\"user=" + 21.chr + 32.chr + 39.chr + "?\"&come=" + 21.chr + 32.chr + 55.chr + "?\"MJ POST END" + 21.chr + 32.chr + 32.chr
+    p $boads
   end
 
   get "/*/re" do |boad_num|
@@ -117,9 +122,4 @@ end
 
 get "/*/renum" do |boad_num|
   return $boads[@boad_num]["come"].size.to_s
-end
-
-post "/*/ij/re/*" do |boad_num, come_num| #あくまでテスト用 必ず消すこと！
-  @chat = params[:chat]
-  return "tence " + @chat
 end
