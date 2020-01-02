@@ -3,17 +3,15 @@ require"bundler/setup"
 require"sinatra"
 require"sinatra/reloader"
 require"sinatra/namespace"
+require"nkf"
 
 time = 0.75
-$boads = [
-  {
-    "boad_name" => "boad",
-    "boad_num" => 0,
-    "come" => ["hello world"],
-    "user" => ["user1"],
-    "pass" => "123456"
-  }
-]
+$date = File.open("date.json", "w+")
+if $date.read == ""
+  $boads = []
+else
+  $boads = JSON.parse($date.read)
+end
 
 def recome(boad_num, come_num)
   p $boads
@@ -34,9 +32,9 @@ def recome_ij(boad_num, come_num)
   return @re_str
 end
 
-def sarch(str, word)
+def sarch_boads(word)
   return $boads.select { |n|
-    n[str].include?(word)
+    n["boad_name"].include?(word) || !(n["come"].select{ |n_a| n_a.include?(word) } == [])
   }
 end
 
@@ -53,16 +51,30 @@ get "/about" do
   erb :about
 end
 
+get "/end" do
+  $date.write($boads)
+  sleep time
+  return "'end"
+  exit!
+end
+
 
 namespace "/ij" do
 
-  get "/sarch_boad/*" do |word|
-    @boads_true = sarch("boad_name", word)
+  get "/look" do
+    p $boads
+    sleep time
+    return $boads
+  end
+
+  get "/sarch_boads/*" do |word|
+    @boads_true = sarch_boads(word)
     @boads_true = @boads_true.map{ |n|
-      n["boad_name"] + " &number" + n["boad_num"].to_s + " &" + nushi + n["user"][0]
+      n["boad_name"] + " &number" + n["boad_num"].to_s + " &" + nushi + n["user"][0] + "\n"
     }
     sleep time
-    return @boads_true
+    p $boads
+    return @boads_true.to_s + "'type boad number to look\n?\"MJ GET 10.0.1.22:4567/ij/"
   end
 
   get "/reset" do
