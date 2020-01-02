@@ -4,7 +4,7 @@ require"sinatra"
 require"sinatra/reloader"
 require"sinatra/namespace"
 
-
+time = 0.75
 $boads = [
   {
     "boad_name" => "boad",
@@ -25,13 +25,23 @@ end
 def recome_ij(boad_num, come_num)
   @re_hash = recome(boad_num, come_num)
   @re_str = "'user name: " + @re_hash["user"] + "\n'" + @re_hash["come"] + "\n" 
-  if $boads.size == come_num.to_i + 1
-    @re_str = @re_str + "'taht is all come\n'boad_number/re, boad_number/se, sarch or newboad\n?\"MJ GET 10.0.1.22:4567/ij/" 
+  if $boads[boad_num.to_i]["come"].size == come_num.to_i + 1
+    @re_str = @re_str + "'that is all come\n'boad_number/re, boad_number/se, sarch or newboad\n?\"MJ GET 10.0.1.22:4567/ij/" 
   else
     @re_str = @re_str + "'press enter to next\n" + "?\"MJ GET 10.0.1.22:4567/ij/" + boad_num.to_s + "/re/" + 1.to_s
   end
   p $boads
   return @re_str
+end
+
+def sarch(str, word)
+  return $boads.select { |n|
+    n[str].include?(word)
+  }
+end
+
+def nushi
+  return 64.chr + 199.chr + 188.chr
 end
 
 
@@ -46,8 +56,17 @@ end
 
 namespace "/ij" do
 
+  get "/sarch_boad/*" do |word|
+    @boads_true = sarch("boad_name", word)
+    @boads_true = @boads_true.map{ |n|
+      n["boad_name"] + " &number" + n["boad_num"].to_s + " &" + nushi + n["user"][0]
+    }
+    sleep time
+    return @boads_true
+  end
+
   get "/reset" do
-    sleep 1
+    sleep time
     return "UART2\nOK\n'good bue!\n"
   end
 
@@ -55,29 +74,30 @@ namespace "/ij" do
     content_type :json
     $boads.push({
     "boad_name" => params[:boad_name],
+    "boad_num" => $boads.size,
     "come" => [params[:come]],
     "user" => [params[:user]],
     "pass" => params[:pass].chomp!
     })
     @str_sub = ($boads.size - 1).to_s
     p $boads
-    sleep 1
+    sleep time
     return "'re or se\n?\"MJ GET 10.0.1.22:4567/ij/" + @str_sub + "/"
   end
 
   get "/*/se" do |boad_num|
-    sleep 1
+    sleep time
     return "OK2\nUART0\nCLS\nUART2:?\"MJ POST START 10.0.1.22:4567/ij/" + boad_num + "/se" + 21.chr + 32.chr + 37.chr + "?\"user=" + 21.chr + 32.chr + 39.chr + "?\"&come=" + 21.chr + 32.chr + 55.chr + "?\"MJ POST END" + 21.chr + 32.chr + 32.chr
     p $boads
   end
 
   get "/*/re" do |boad_num|
-    sleep 1
+    sleep time
     return recome_ij(boad_num, 0)
   end
 
   get "/*/re/*" do |boad_num, come_num|
-    sleep 1
+    sleep time
     return recome_ij(boad_num, come_num)
   end
 
@@ -99,6 +119,7 @@ namespace "/ij" do
 #    end
 
     $boads[boad_num.to_i]["come"] << @come
+    sleep time
     return "'I catch your come!\n'press enter to next\n" + "?\"MJ GET 10.0.1.22:4567/ij/" + boad_num.to_s + "/re"
   end
 
