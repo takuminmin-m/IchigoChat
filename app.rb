@@ -3,15 +3,17 @@ require"bundler/setup"
 require"sinatra"
 require"sinatra/reloader"
 require"sinatra/namespace"
-require"nkf"
+require"msgpack"
 
 time = 0.75
-$date = File.open("date.json", "w+")
-if $date.read == ""
-  $boads = []
-else
-  $boads = JSON.parse($date.read)
-end
+
+# $boadsの保存用 未完成
+#File.open("date.bin", "r") do |f|
+#  $boads = MessagePack.unpack(f.read)
+#end
+$boads =[]# 完成したら不要
+
+
 
 def recome(boad_num, come_num)
   p $boads
@@ -43,6 +45,7 @@ def nushi
 end
 
 
+#sinatraメイン処理
 get "/" do
   erb :chat
 end
@@ -51,20 +54,20 @@ get "/about" do
   erb :about
 end
 
-get "/end" do
-  $date.write($boads)
-  sleep time
-  return "'end"
-  exit!
-end
+# $boadsセーブ処理本体 未完成
+#get "/end" do
+#  File.open("date.bin", "w") do |file|
+#    file.print($hash.to_msgpack)
+#  end
+#end
+
 
 
 namespace "/ij" do
 
-  get "/look" do
-    p $boads
+  get "" do
     sleep time
-    return $boads
+    return "'Chat application for IchigoJam\n'IchigoChat\n'newboad <= use:POST write password(do not use enter)\n'(boad_num)/se <= use:POST if you need, you write &pass=(password(do not use enter))\n'(boad_num)/re(/(come_num)) use:GET\n'boads_sarch/(word for sarch) use:GET\n"
   end
 
   get "/sarch_boads/*" do |word|
@@ -79,6 +82,7 @@ namespace "/ij" do
 
   get "/reset" do
     sleep time
+    p $boads
     return "UART2\nOK\n'good bue!\n"
   end
 
@@ -118,17 +122,17 @@ namespace "/ij" do
     @come = params[:come]
     @user = params[:user]
 # スレ主かを判定して、"@ﾇｼ"を追加する
-#    if (params[:pass] = nil)
-#
-#     if (params[:pass].to_s.chomp! == $boads[boad_num.to_i]["pass"].to_s) && (@user.to_s == $boads[boad_num.to_i]["user"][0].to_s)
-#        $boads[boad_num.to_i]["user"] << @user.chomp + "@nushi"
-#      else
-#        $boads[boad_num.to_i]["user"] << @user.chomp
-#      end
-#
-#    else
+    if (params[:pass] = "")
+
+     if (params[:pass].to_s.chomp! == $boads[boad_num.to_i]["pass"].to_s) && (@user.to_s == $boads[boad_num.to_i]["user"][0].to_s)
+        $boads[boad_num.to_i]["user"] << @user.chomp + "@nushi"
+      else
+        $boads[boad_num.to_i]["user"] << @user.chomp
+      end
+
+    else
       $boads[boad_num.to_i]["user"] << @user.chomp
-#    end
+    end
 
     $boads[boad_num.to_i]["come"] << @come
     sleep time
