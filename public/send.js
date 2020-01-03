@@ -33,6 +33,5 @@ function tyosei_(){//使用できない文字をカット
   n = n + 1
   bunsyo = "<font color='green'>" + String(n) + ":" +name2+ "</font><br />" + talk2 + " <br /><br /><div id='kusa"+String(n)+"'>"//タグを追加
   no.innerHTML = bunsyo
+  console.log(bunsyo)
 }
-
-console.log()

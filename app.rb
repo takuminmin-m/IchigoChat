@@ -4,6 +4,7 @@ require"sinatra"
 require"sinatra/reloader"
 require"sinatra/namespace"
 require"msgpack"
+# encoding: shift-jis
 
 time = 0.75
 
@@ -24,9 +25,9 @@ end
 
 def recome_ij(boad_num, come_num)
   @re_hash = recome(boad_num, come_num)
-  @re_str = "'user name: " + @re_hash["user"] + "\n'" + @re_hash["come"] + "\n" 
+  @re_str = "'user name: " + @re_hash["user"] + "\n'" + @re_hash["come"] + "\n"
   if $boads[boad_num.to_i]["come"].size == come_num.to_i + 1
-    @re_str = @re_str + "'that is all come\n'boad_number/re, boad_number/se, sarch or newboad\n?\"MJ GET 10.0.1.22:4567/ij/" 
+    @re_str = @re_str + "'that is all come\n'boad_number/re, boad_number/se, sarch or newboad\n?\"MJ GET 10.0.1.22:4567/ij/"
   else
     @re_str = @re_str + "'press enter to next\n" + "?\"MJ GET 10.0.1.22:4567/ij/" + boad_num.to_s + "/re/" + 1.to_s
   end
