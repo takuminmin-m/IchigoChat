@@ -3,16 +3,14 @@ require"bundler/setup"
 require"sinatra"
 require"sinatra/reloader"
 require"sinatra/namespace"
-require"msgpack"
-# encoding: shift-jis
 
 time = 0.75
 
-# $boadsの保存用 未完成
-#File.open("date.bin", "r") do |f|
-#  $boads = MessagePack.unpack(f.read)
-#end
-$boads =[]# 完成したら不要
+# $boadsの保存用
+file_r = File.open("date.txt", "r")
+$boads = eval(file_r.read)
+file_r.close
+
 
 
 
@@ -55,12 +53,13 @@ get "/about" do
   erb :about
 end
 
-# $boadsセーブ処理本体 未完成
-#get "/end" do
-#  File.open("date.bin", "w") do |file|
-#    file.print($hash.to_msgpack)
-#  end
-#end
+# $boadsセーブ処理本体
+get "/end" do
+  file_w = File.open("date.txt", "w")
+  file_w.print($boads)
+  file_w.close
+  exit!
+end
 
 
 
