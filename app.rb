@@ -46,11 +46,11 @@ end
 
 #sinatraメイン処理
 get "/" do
-  erb :chat
+  return erb :chat
 end
 
 get "/about" do
-  erb :about
+  return erb :about
 end
 
 # $boadsセーブ処理本体
@@ -61,6 +61,14 @@ get "/end" do
   exit!
 end
 
+get "/sarch/*" do |word|
+  @boads_true = sarch_boads(word)
+  @boads_true = @boads_true.map{ |n|
+    n["boad_name"] + " &number" + n["boad_num"].to_s + " &" + nushi + n["user"][0] + "\n"
+  }
+  p $boads
+  return erb :index
+end
 
 
 namespace "/ij" do
