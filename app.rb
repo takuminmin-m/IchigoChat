@@ -148,10 +148,19 @@ namespace "/ij" do
   end
 
 end
-#get "/*/re/*" do |boad_num, come_num|
-  #p $boads
-  #return recome(boad_num, come_num).to_json
-#end
+
+
+get "/*/renum" do |boad_num|
+  @boad_size = {
+    "boad_size" => $boads[@boad_num]["come"].size
+  }
+  return @boad_size.to_json
+end
+
+get "/*/re/*" do |boad_num, come_num|
+  p $boads
+  return recome(boad_num, come_num).to_json
+end
 
 post "/*/se" do |boad_num|
   @come = params[:come]
@@ -163,8 +172,4 @@ post "/*/se" do |boad_num|
   end
   $boads[boad_num.to_i]["user"] << @user
   return "'I catch your come!\n'press enter to next\n" + "MJ GET 10.0.1.22:4567/ij/" + boad_num.to_s + "/re/0"
-end
-
-get "/*/renum" do |boad_num|
-  return $boads[@boad_num]["come"].size.to_s
 end
