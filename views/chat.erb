@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="style.css">
 		<script src="jquery.min.js"></script>
 		<script type="text/javascript" src="send.js"></script>
+		<script type="text/javascript" src="fetch.js"></script>
 	</head>
 
 	<body>
@@ -20,7 +21,7 @@
 			ナマエ:<input name="oso" type="text" id="nam"><br />
 			トウコウ(カタカナ,ハンカクエイスウノミ):<br />
 			<textarea name="osa" id="toukou" cols="30" rows="7"></textarea>
-			</br><input type="button" value="トウコウ" onclick="tyosei_()"><input type="button" value="ブラウザノカタヘ(jamハオスナ" onclick="jump()">
+			</br><input type="button" value="トウコウ" onclick="tyosei_(document.forms.js.nam.value, document.forms.js.toukou.value)"><input type="button" value="ブラウザノカタヘ(jamハオスナ" onclick="jump()">
 		</form>
 		<br />
 

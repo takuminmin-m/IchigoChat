@@ -2,10 +2,12 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8">
-    <title>IchigoChat sarch"<%= @word %></title>
+    <title>IchigoChat sarch"<%= @word %>"</title>
   </head>
   <body>
-    <h1>HTMLの書き方</h1>
-    <p>はじめてのHTMLを作りました</p>
+    <h1>検索結果 "<%= @word %>"</h1>
+    <ol>
+		<%= "<li>" + @boads_true.join("</li>\n<li>") + "</li>" %>
+    </ol>
   </body>
 </html>

@@ -1,11 +1,30 @@
 var n = 0//回数
 var list = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<>+-*/?.,_=~^\|@`{}][:;!#$%&()=アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンァィゥェォャュョッヴガギグゲゴザジズゼゾダヂヅデドバビブベボパピプペポ「」・ "//使用可能な文字を定義
+
 function jump(){//ヘルプ
   location.href = location + "about"
 }
-function tyosei_(){//使用できない文字をカット
-  var name = document.forms.js.nam.value
-  var talk = document.forms.js.toukou.value
+
+function send(name, talk, pass) {
+  if pass === undefined {
+    pass = "";
+  };
+  
+  var re_json = {
+    "user": name,
+    "come": talk,
+    "pass": pass
+  }
+  fetch(location + "\se", {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+        'Content-Type': 'application/json'
+    }
+  });
+}
+
+function tyosei_(name, talk, pass){//使用できない文字をカット + htmlに書き込み
   var name2 = ""
   var talk2 = ""
   for( var i = 0; i < name.length; i++ ){
@@ -28,6 +47,9 @@ function tyosei_(){//使用できない文字をカット
       talk2 = talk2 + "<br />"
     }
   }
+  
+  // 送信
+  send(name2, talk2, pass);
 
   no = document.getElementById( "kusa" + String(n) )
   n = n + 1

@@ -45,10 +45,6 @@ end
 
 
 #sinatraメイン処理
-get "/" do
-  return erb :chat
-end
-
 get "/about" do
   return erb :about
 end
@@ -62,9 +58,10 @@ get "/end" do
 end
 
 get "/sarch/*" do |word|
+  @word = word # erb 転送用 @必須
   @boads_true = sarch_boads(word)
   @boads_true = @boads_true.map{ |n|
-    n["boad_name"] + " &number" + n["boad_num"].to_s + " &" + nushi + n["user"][0] + "\n"
+    n["boad_name"] + " &number" + n["boad_num"].to_s + " &" + nushi + n["user"][0]
   }
   p $boads
   return erb :index
@@ -165,11 +162,23 @@ end
 post "/*/se" do |boad_num|
   @come = params[:come]
   @user = params[:user]
-  if (params[:pass].to_s.chomp! == $boads[boad_num.to_i]["pass"].to_s) && (@user.to_s == $boads[boad_num.to_i]["user"][0].to_s)
-    $boads[boad_num.to_i]["user"] << @user + "@nushi"
-  else
-    $boads[boad_num.to_i]["user"] << @user
-  end
-  $boads[boad_num.to_i]["user"] << @user
+  # スレ主かを判定して、"@ﾇｼ"を追加する
+    if (params[:pass] = "")
+
+     if (params[:pass].to_s.chomp! == $boads[boad_num.to_i]["pass"].to_s) && (@user.to_s == $boads[boad_num.to_i]["user"][0].to_s)
+        $boads[boad_num.to_i]["user"] << @user.chomp + "@nushi"
+      else
+        $boads[boad_num.to_i]["user"] << @user.chomp
+      end
+
+    else
+      $boads[boad_num.to_i]["user"] << @user.chomp
+    end
+
+    $boads[boad_num.to_i]["come"] << @come
   return "'I catch your come!\n'press enter to next\n" + "MJ GET 10.0.1.22:4567/ij/" + boad_num.to_s + "/re/0"
+end
+
+get "/*" do |boad_num|
+  return erb :chat
 end
