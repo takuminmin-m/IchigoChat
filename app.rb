@@ -4,6 +4,8 @@ require"sinatra"
 require"sinatra/reloader"
 require"sinatra/namespace"
 
+# coding: utf-8
+
 time = 0.75
 
 # $boadsの保存用
@@ -61,10 +63,14 @@ get "/sarch/*" do |word|
   @word = word # erb 転送用 @必須
   @boads_true = sarch_boads(word)
   @boads_true = @boads_true.map{ |n|
-    n["boad_name"] + " &number" + n["boad_num"].to_s + " &" + nushi + n["user"][0]
+    n["boad_name"] + " &number" + n["boad_num"].to_s + " @" + n["user"][0]
   }
-  p $boads
-  return erb :index
+  p @boads_true
+  if @boads_true == nil
+    return erb :index_notfound
+  else
+    return erb :index
+  end
 end
 
 
@@ -72,13 +78,13 @@ namespace "/ij" do
 
   get "" do
     sleep time
-    return "'Chat application for IchigoJam\n'IchigoChat\n'newboad <= use:POST write password(do not use enter)\n'(boad_num)/se <= use:POST if you need, you write &pass=(password(do not use enter))\n'(boad_num)/re(/(come_num)) use:GET\n'boads_sarch/(word for sarch) use:GET\n"
+    return "'Chat application for IchigoJam\n'IchigoChat\n'newboad <= use:GET write password(do not use enter)\n'(boad_num)/se <= use:POST if you need, you write &pass=(password(do not use enter))\n'(boad_num)/re(/(come_num)) use:GET\n'boads_sarch/(word for sarch) use:GET\n"
   end
 
   get "/sarch_boads/*" do |word|
     @boads_true = sarch_boads(word)
     @boads_true = @boads_true.map{ |n|
-      n["boad_name"] + " &number" + n["boad_num"].to_s + " &" + nushi + n["user"][0] + "\n"
+      n["boad_name"] + " &number" + n["boad_num"].to_s + " &ﾇｼ" + n["user"][0] + "\n"
     }
     sleep time
     p $boads
@@ -89,6 +95,10 @@ namespace "/ij" do
     sleep time
     p $boads
     return "UART2\nOK\n'good bue!\n"
+  end
+  
+  get "/newboad" do
+    return "OK2\nUART0\nCLS\nUART2:?\"MJ POST START 10.0.1.22:4567/ij/newboad" + 21.chr + 32.chr + 37.chr + "?\"user=" + 21.chr + 32.chr + 39.chr + "?\"&come=" + 21.chr + 32.chr + 41.chr + "?\"&boad_name=" + 21.chr + 32.chr + 43.chr + "?\"&pass=" + 21.chr + 32.chr + 55.chr + "?\"MJ POST END" + 21.chr + 32.chr + 32.chr
   end
 
   post "/newboad" do

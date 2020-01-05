@@ -1,3 +1,4 @@
+<%# coding: UTF-8 %>
 <!DOCTYPE html>
 <html lang="ja">
   <head>
@@ -7,7 +8,7 @@
   <body>
     <h1>検索結果 "<%= @word %>"</h1>
     <ol>
-		<%= "<li>" + @boads_true.join("</li>\n<li>") + "</li>" %>
+		<%= "<li>" + @boads_true.join("</li>\n<li>") + "</li>".force_encoding("UTF-8") %>
     </ol>
   </body>
 </html>
