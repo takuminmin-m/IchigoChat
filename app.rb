@@ -59,6 +59,7 @@ get "/end" do
   exit!
 end
 
+# 動作しない
 get "/sarch/*" do |word|
   @word = word # erb 転送用 @必須
   @boads_true = sarch_boads(word)
@@ -189,6 +190,7 @@ post "/*/se" do |boad_num|
   return "'I catch your come!\n'press enter to next\n" + "MJ GET 10.0.1.22:4567/ij/" + boad_num.to_s + "/re/0"
 end
 
+# 動作しない
 get "/*" do |boad_num|
   return erb :chat
 end
