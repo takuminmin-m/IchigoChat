@@ -63,6 +63,7 @@ get "/end" do
   return 404
 end
 
+# 動作しない
 get "/sarch/*" do |word|
   @word = word # erb 転送用 @必須
   @boads_true = sarch_boads(word)
@@ -201,6 +202,7 @@ get "/" do
   return erb :about
 end
 
+# 動作しない
 get "/*" do |boad_num|
   @boad_num = boad_num
   @ip = ip
