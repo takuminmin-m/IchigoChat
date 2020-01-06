@@ -1,1 +1,1 @@
-[{"boad_name"=>"boad", "boad_num"=>0, "come"=>["hello"], "user"=>"dora", "pass"=>"1234"}, {"boad_name"=>"boad", "boad_num"=>1, "come"=>["hello"], "user"=>["dora"], "pass"=>"1234"}]
+[{"boad_name"=>"boad", "boad_num"=>0, "come"=>["hello"], "user"=>"dora", "pass"=>"1234"}, {"boad_name"=>"boad", "boad_num"=>1, "come"=>["hello", "fdasfds", "fdasfdsdsaffsfsfdfsd"], "user"=>["dora", "eibid", "konn"], "pass"=>"1234"}]

@@ -1,14 +1,14 @@
-﻿
-<!-- チャットアプリ　投稿システム -->
-<%# coding: UTF-8 %><!-- エンコーディング指定 -->
-<!doctype html>
+﻿<!DOCTYPE HTML>
 <html lang="ja">
 	<head>
 		<meta charset="UTF-8">
-		<title>chat system</title>
+		<title><%= "IC: " + @boad_name %></title>
 		<meta name="descrption" content="概要">
 		<link rel="stylesheet" href="style.css">
-		<script src="jquery.min.js"></script>
+				<script type="text/javascript">
+			<%= "var boad_num = " + @boad_num.to_s %>
+			<%= "var ip = \"" + @ip + "\"" %>
+		</script>
 		<script type="text/javascript" src="send.js"></script>
 		<script type="text/javascript" src="fetch.js"></script>
 		<script type="text/javascript" src="timer.js"></script>
@@ -17,12 +17,16 @@
 	<body>
 		<div id="kusa0"><!--初期タグ-->
 		</div>
+		
 		<form name="js">
-			&lt;トウコウ&gt;<br />
-			ナマエ:<input name="oso" type="text" id="nam"><br />
-			トウコウ(カタカナ,ハンカクエイスウノミ):<br />
+			<input type="button" value="about" onclick="jump("about")"><br>
+			検索:<input type="text" name="oishi" id="word"><input type="button" value="検索" onclick="jump("sarch_boads/" + documents.forms.js.word.value)">
+			<br>/&lt;トウコウ&gt;<br>
+			ナマエ:<input name="oso" type="text" id="nam"><br>
+			パスワード（あれば）:<input name="eb" type="text" id="pass"><br>
+			トウコウ(カタカナ,ハンカクエイスウノミ):<br>
 			<textarea name="osa" id="toukou" cols="30" rows="7"></textarea>
-			</br><input type="button" value="トウコウ" onclick="tyosei_(document.forms.js.nam.value, document.forms.js.toukou.value)"><input type="button" value="更新" onclick="fetch_boad()">
+			<br><input type="button" value="トウコウ" onclick="tyosei(document.forms.js.nam.value, document.forms.js.toukou.value, document.forms.js.pass.value);"><input type="button" value="更新" onclick="fetch_boad();">
 		</form>
 		<br />
 

@@ -4,9 +4,13 @@ require"sinatra"
 require"sinatra/reloader"
 require"sinatra/namespace"
 
+
 # coding: utf-8
 
 time = 0.75
+
+# ip ad
+ip = "10.0.1.22"
 
 # $boadsの保存用
 file_r = File.open("date.txt", "r")
@@ -17,7 +21,7 @@ file_r.close
 
 
 def recome(boad_num, come_num)
-  p $boads
+  #p $boads
   @come_sub = $boads[boad_num.to_i]["come"][come_num.to_i]
   @user_sub = $boads[boad_num.to_i]["user"][come_num.to_i]
   return {"come" => @come_sub, "user" => @user_sub}
@@ -29,7 +33,7 @@ def recome_ij(boad_num, come_num)
   if $boads[boad_num.to_i]["come"].size == come_num.to_i + 1
     @re_str = @re_str + "'that is all come\n'boad_number/re, boad_number/se, sarch or newboad\n?\"MJ GET 10.0.1.22:4567/ij/"
   else
-    @re_str = @re_str + "'press enter to next\n" + "?\"MJ GET 10.0.1.22:4567/ij/" + boad_num.to_s + "/re/" + 1.to_s
+    @re_str = @re_str + "'press enter to next\n" + "?\"MJ GET " + ip + ":4567/ij/" + boad_num.to_s + "/re/" + 1.to_s
   end
   p $boads
   return @re_str
@@ -56,14 +60,14 @@ get "/end" do
   file_w = File.open("date.txt", "w")
   file_w.print($boads)
   file_w.close
-  exit!
+  return 404
 end
 
 get "/sarch/*" do |word|
   @word = word # erb 転送用 @必須
   @boads_true = sarch_boads(word)
   @boads_true = @boads_true.map{ |n|
-    n["boad_name"] + " &number" + n["boad_num"].to_s + " @" + n["user"][0]
+    "<a href=\"/" + n["boad_num"] + "\">" + n["boad_name"] + "</a> &number" + n["boad_num"].to_s + " @" + n["user"][0]
   }
   p @boads_true
   if @boads_true == nil
@@ -96,7 +100,7 @@ namespace "/ij" do
     p $boads
     return "UART2\nOK\n'good bue!\n"
   end
-  
+
   get "/newboad" do
     return "OK2\nUART0\nCLS\nUART2:?\"MJ POST START 10.0.1.22:4567/ij/newboad" + 21.chr + 32.chr + 37.chr + "?\"user=" + 21.chr + 32.chr + 39.chr + "?\"&come=" + 21.chr + 32.chr + 41.chr + "?\"&boad_name=" + 21.chr + 32.chr + 43.chr + "?\"&pass=" + 21.chr + 32.chr + 55.chr + "?\"MJ POST END" + 21.chr + 32.chr + 32.chr
   end
@@ -113,12 +117,15 @@ namespace "/ij" do
     @str_sub = ($boads.size - 1).to_s
     p $boads
     sleep time
-    return "'re or se\n?\"MJ GET 10.0.1.22:4567/ij/" + @str_sub + "/"
+    file_w = File.open("date.txt", "w")
+    file_w.print($boads)
+    file_w.close
+    return "'re or se\n?\"MJ GET " + ip + ":4567/ij/" + @str_sub + "/"
   end
 
   get "/*/se" do |boad_num|
     sleep time
-    return "OK2\nUART0\nCLS\nUART2:?\"MJ POST START 10.0.1.22:4567/ij/" + boad_num + "/se" + 21.chr + 32.chr + 37.chr + "?\"user=" + 21.chr + 32.chr + 39.chr + "?\"&come=" + 21.chr + 32.chr + 55.chr + "?\"MJ POST END" + 21.chr + 32.chr + 32.chr
+    return "OK2\nUART0\nCLS\nUART2:?\"MJ POST START " + ip + ":4567/ij/" + boad_num + "/se" + 21.chr + 32.chr + 37.chr + "?\"user=" + 21.chr + 32.chr + 39.chr + "?\"&come=" + 21.chr + 32.chr + 55.chr + "?\"MJ POST END" + 21.chr + 32.chr + 32.chr
     p $boads
   end
 
@@ -151,27 +158,28 @@ namespace "/ij" do
 
     $boads[boad_num.to_i]["come"] << @come
     sleep time
-    return "'I catch your come!\n'press enter to next\n" + "?\"MJ GET 10.0.1.22:4567/ij/" + boad_num.to_s + "/re"
+    return "'I catch your come!\n'press enter to next\n" + "?\"MJ GET " + ip + ":4567/ij/" + boad_num.to_s + "/re"
   end
 
 end
 
 
 get "/*/renum" do |boad_num|
-  @boad_size = {
-    "boad_size" => $boads[@boad_num]["come"].size
-  }
-  return @boad_size.to_json
+  return ($boads[boad_num.to_i]["come"].size - 1).to_s
 end
 
-get "/*/re/*" do |boad_num, come_num|
-  p $boads
-  return recome(boad_num, come_num).to_json
+get "/*/re/*/*" do |boad_num, come_num, to|
+  @come = []
+  for i in (come_num.to_i + 1)..to.to_i
+    @come << [recome(boad_num, i)]
+  end  
+  return @come.to_json
 end
 
 post "/*/se" do |boad_num|
-  @come = params[:come]
-  @user = params[:user]
+  params = JSON.parse request.body.read # JSONをparamsで参照できるように hashは文字列に
+  @come = params["come"]
+  @user = params["user"]
   # スレ主かを判定して、"@ﾇｼ"を追加する
     if (params[:pass] = "")
 
@@ -186,9 +194,16 @@ post "/*/se" do |boad_num|
     end
 
     $boads[boad_num.to_i]["come"] << @come
-  return "'I catch your come!\n'press enter to next\n" + "MJ GET 10.0.1.22:4567/ij/" + boad_num.to_s + "/re/0"
+  return "'I catch your come!\n'press enter to next\n" + "MJ GET "+ ip + ":4567/ij/" + boad_num.to_s + "/re/0"
+end
+
+get "/" do
+  return erb :about
 end
 
 get "/*" do |boad_num|
+  @boad_num = boad_num
+  @ip = ip
+  @boad_name = $boads[boad_num.to_i]["boad_name"]
   return erb :chat
 end
