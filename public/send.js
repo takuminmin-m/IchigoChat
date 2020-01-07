@@ -3,8 +3,10 @@ var list='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ０１�
 var list2='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<>+-*/?.,_=~^\|@`{}][:;!#$%&()="ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝｧｨｩｪｫｬｭｮｯｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝｧｨｩｪｫｬｭｮｯｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝｧｨｩｪｫｬｭｮｯﾞﾟ';
 var list3="がぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽガギグゲゴザジズゼゾダヂヅデドバビブベボパピプペポヴ";
 var list4="ｶﾞｷﾞｸﾞｹﾞｺﾞｻﾞｼﾞｽﾞｾﾞｿﾞﾀﾞﾁﾞﾂﾞﾃﾞﾄﾞﾊﾞﾋﾞﾌﾞﾍﾞﾎﾞﾊﾟﾋﾟﾌﾟﾍﾟﾎﾟｶﾞｷﾞｸﾞｹﾞｺﾞｻﾞｼﾞｽﾞｾﾞｿﾞﾀﾞﾁﾞﾂﾞﾃﾞﾄﾞﾊﾞﾋﾞﾌﾞﾍﾞﾎﾞﾊﾟﾋﾟﾌﾟﾍﾟﾎﾟｳﾞ";
+var doc=document.getElementById("kusa")
+var bunsyo=""
 
-function jump(src){//ヘルプ
+function jump(src){
 	location.href=ip + src
 }
 
@@ -45,10 +47,8 @@ function tyosei(name, touk, pass){//使用できない文字をカット
 }
 
 function view(name, touk){ //表示
-	doc=document.getElementById("kusa"+String(n))
-	n=n+1
-	bunsyo="<font color='green'>"+String(n)+":"+name+"</font><br />"+touk+" <br /><br /><div id='kusa"+String(n)+"'>"//タグを追加
-	doc.innerHTML=bunsyo
+	bunsyo=bunsyo + "<font color='green'>"+String(n)+":"+name+"</font><br />"+touk+" <br /><br />"//タグを追加
+	kusa.innerHTML=bunsyo
 }
 
 function send(name, talk, pass){//送信
@@ -63,5 +63,5 @@ function send(name, talk, pass){//送信
       "pass": pass
     })
   })
-  
+
 }

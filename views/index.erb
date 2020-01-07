@@ -1,11 +1,18 @@
-<%# coding: UTF-8 %>
 <!DOCTYPE html>
 <html lang="ja">
   <head>
     <meta charset="UTF-8">
     <title>IchigoChat sarch"<%= @word %>"</title>
+    <script type="text/javascript">
+      function jump(src){
+      	location.href=ip + src
+      }
+    </script>
   </head>
   <body>
+    <form name="js">
+			検索:<input type="text" name="oishi" id="word"><input type="button" value="検索" onclick="jump("sarch/" + documents.forms.js.word.value)">
+		</form>
     <h1>検索結果 "<%= @word %>"</h1>
     <ol>
 		<%= "<li>" + @boads_true.join("</li>\n<li>") + "</li>".force_encoding("UTF-8") %>

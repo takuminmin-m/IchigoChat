@@ -64,10 +64,12 @@ get "/end" do
 end
 
 get "/sarch/*" do |word|
+  @ip = ip
   @word = word # erb 転送用 @必須
   @boads_true = sarch_boads(word)
+  p @boads_true
   @boads_true = @boads_true.map{ |n|
-    "<a href=\"/" + n["boad_num"] + "\">" + n["boad_name"] + "</a> &number" + n["boad_num"].to_s + " @" + n["user"][0]
+    "<a href=\"/" + n["boad_num"].to_s + "\">" + n["boad_name"] + "</a> &number" + n["boad_num"].to_s + " @" + n["user"][0]
   }
   p @boads_true
   if @boads_true == nil
@@ -170,9 +172,10 @@ end
 
 get "/*/re/*/*" do |boad_num, come_num, to|
   @come = []
-  for i in (come_num.to_i + 1)..to.to_i
-    @come << [recome(boad_num, i)]
-  end  
+  for i in (come_num.to_i)..to.to_i
+    @come << recome(boad_num, i)
+  end
+  p @come
   return @come.to_json
 end
 
@@ -191,6 +194,7 @@ post "/*/se" do |boad_num|
 
     else
       $boads[boad_num.to_i]["user"] << @user.chomp
+
     end
 
     $boads[boad_num.to_i]["come"] << @come
