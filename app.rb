@@ -84,7 +84,7 @@ namespace "/ij" do
 
   get "" do
     sleep time
-    return "'Chat application for IchigoJam\n'IchigoChat\n'newboad <= use:GET write password(do not use enter)\n'(boad_num)/se <= use:POST if you need, you write &pass=(password(do not use enter))\n'(boad_num)/re(/(come_num)) use:GET\n'boads_sarch/(word for sarch) use:GET\n"
+    return "'Chat application for IchigoJam\n'IchigoChat\n'newboad <= use:GET write password(do not use enter)\n'(boad_num)/se <= use:POST if you need, you write &pass=(password(do not use enter))\n'(boad_num)/re(/(come_num)) use:GET\n'boads_sarch/(word for sarch) use:GET\nUART0\nUART2:?\"MJ GET " + ip + ":4567/ij"
   end
 
   get "/sarch_boads/*" do |word|
