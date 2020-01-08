@@ -5,6 +5,8 @@
 ## 動作要件
 ### クライアント側
 IchigoJam, MixJuice
+もしくは
+ブラウザ(fetch APIが使用可能)
 ### サーバー側
 WindowsとかLinuxとかのRubyが動くPC, Ruby2.7.0, Sinatra, bundler, LAN環境
 ### 実行
@@ -17,3 +19,5 @@ WindowsとかLinuxとかのRubyが動くPC, Ruby2.7.0, Sinatra, bundler, LAN環�
 |public|静的ファイルのHTML,css,画像などを配置する|
 |views|動的ファイルerbなどを配置する|
 |app.rb|メインアプリケーション、アクセスの振り分け、メイン処理|
+## 今後追加したい機能など
+ブラウザ側のnewboads
