@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8">
+		<title>IC: newboad</title>
+		<script type="text/javascript">
+			<%= "var ip = \"" + @ip + "\"" %>
+		</script>
+		<script type="text/javascript" src="newboad.js"></script>
+		<script type="text/javascript" src="jump.js"></script>
+	</head>
+
+	<body>
+		<div id="kusa">
+		</div>
+
+		<form name="js">
+			<input type="button" value="about" onclick="jump("about")"><br>
+			検索:<input type="text" name="oishi" id="word"><input type="button" value="検索" onclick="jump("sarch/" + documents.forms.js.word.value)">
+			<br>/&lt;アタラシイ イタヲ サクセイ&gt;<br>
+			イタノ ナマエ:<input name="boad_name" type="text" id ="boad_name"><br>
+			ナマエ:<input name="oso" type="text" id="nam"><br>
+			パスワード（あれば）:<input name="eb" type="text" id="pass"><br>
+			トウコウ(カタカナ,ハンカクエイスウノミ):<br>
+			<textarea name="osa" id="toukou" cols="30" rows="7"></textarea>
+			<br><input type="button" value="トウコウ" onclick="newboad(document.forms.js.nam.value, document.forms.js.toukou.value, document.forms.js.pass.value);"><input type="button" value="更新" onclick="fetch_boad();">
+		</form>
+		<br />
+
+	</body>
+
+</html>

@@ -2,17 +2,12 @@
 <html lang="ja">
 	<head>
 		<meta charset="UTF-8">
-		<title>chat system</title>
-		<meta name="descrption" content="概要">
-		<link rel="stylesheet" href="style.css">
+		<title>IchigoChat</title>
 		<script type="text/javascript">
 			<%= "var ip = \"" + @ip + "\"" %>
 		</script>
-		<script type="text/javascript">
-			function jump(src){
-				location.href=ip + src
-			}
-		</script>
+		<script type="text/javascript" src="jump.js"></script>
+		<link rel="stylesheet" type="text/css" href="index.css">
 	</head>
 
 	<body>
@@ -22,7 +17,7 @@
 			当チャットアプリは、ichigojamでの対応のため、使用可能な文字は次に限られます：<br />
 			<ul>
 			<li>半角英数字</li>
-			<li>次の記号:!?"#$%&()=+-*/=^~\|@;:^&lt;&gt;,.{}[]「」・、。</li>
+			<li>次の記号:!?&puot;#$%&()=+-*/=^~\|@;:^&lt;&gt;,.{}[]「」・、。</li>
 			<li>半角スペース、改行</li>
 			<li>カタカナ（平仮名は使用不可</li>
 			</ul>
@@ -30,7 +25,8 @@
 		</h4>
 		</p>
 		<form name="js">
-			検索:<input type="text" name="oishi" id="word"><input type="button" value="検索" onclick="jump("sarch/" + documents.forms.js.word.value)">
+			検索:<input type="text" name="sarch" id="word"><input value="検索" type="button" onclick="jump('sarch/' + document.forms.js.word.value)">
+			<input type="text" name="dummy" style="display:none;">
 		</form>
 	</body>
 </html>

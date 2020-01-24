@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <title>IchigoChat sarch"<%= @word %>"</title>
+    <script type="text/javascript" src="jump.js"></script>
+    <script type="text/javascript">
+		<%= "var ip = \"" + @ip + "\"" %>
+	</script>
+	<link rel="stylesheet" type="text/css" href="index.css">
+  </head>
+  <body>
+    <h1>検索結果 "<%= @word %>" が含まれる板は見つかりませんでした</h1>
+    <p>別の単語で試してみてください。</p>
+    <form name="js">
+    	<input type="button" value="about" onclick="jump("about")"><br>
+		検索:<input type="text" name="oishi" id="word"><input type="button" value="検索" onclick="jump('sarch/' + document.forms.js.word.value)">
+		</form>
+  </body>
+</html>

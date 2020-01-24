@@ -10,7 +10,7 @@ require"sinatra/namespace"
 time = 0.75
 
 # ip ad
-ip = "10.0.1.22"
+ip = "10.0.1.22:4567/"
 
 # $boadsの保存用
 file_r = File.open("date.txt", "r")
@@ -52,6 +52,7 @@ end
 
 #sinatraメイン処理
 get "/about" do
+  @ip = ip
   return erb :about
 end
 
@@ -77,6 +78,29 @@ get "/sarch/*" do |word|
   else
     return erb :index
   end
+end
+
+get "/newboad" do
+  @ip = ip
+  return erb :newboad
+end
+
+post "/newboad" do
+  content_type :json
+  $boads.push({
+  "boad_name" => params[:boad_name],
+  "boad_num" => $boads.size,
+  "come" => [params[:come]],
+  "user" => [params[:user]],
+  "pass" => params[:pass].chomp!
+  })
+  @str_sub = ($boads.size - 1).to_s
+  p $boads
+  sleep time
+  file_w = File.open("date.txt", "w")
+  file_w.print($boads)
+  file_w.close
+  return @str_sub
 end
 
 
@@ -202,6 +226,7 @@ post "/*/se" do |boad_num|
 end
 
 get "/" do
+ @ip = ip
   return erb :about
 end
 

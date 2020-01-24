@@ -1,0 +1,43 @@
+html {
+  height: 100%;
+}
+body {
+  background: #333;
+  text-align: center;
+  min-height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+h1 {
+  font-size: 20vw;
+}
+.linear-wipe {
+  text-align: center;
+  background: -webkit-linear-gradient(left, #FFF 20%, #FF0 40%, #FF0 60%, #FFF 80%);
+  background: linear-gradient(to right, #FFF 20%, #FF0 40%, #FF0 60%, #FFF 80%);
+  background-size: 200% auto;
+  color: #000;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-animation: shine 1s linear infinite;
+          animation: shine 1s linear infinite;
+}
+@-webkit-keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
